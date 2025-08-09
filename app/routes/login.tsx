@@ -1,8 +1,7 @@
-import type { Route } from './+types/home';
 import { Page } from '../pages/login';
 import { title } from '~/utils/const';
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: `ログイン${title}` },
     { name: 'description', content: 'ログインページ' },
