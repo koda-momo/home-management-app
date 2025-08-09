@@ -6,7 +6,8 @@
 
 ## フォルダ構成
 
-- `app/routes/` 配下にページを作成(home, shop-detail)
+- `app/routes/` 配下にページを作成
+- `app/types/` 配下に型ファイルを作成
 - `app/components/` 配下にコンポーネントを作成
 - `app/components/{component名}/{component名}.tsx` の形式でコンポーネントを作成
 - `app/components/{component名}/{component名}.css.ts` の形式でコンポーネントに紐づく CSS を作成
