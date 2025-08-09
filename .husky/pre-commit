@@ -1,0 +1,5 @@
+# ESLintチェック
+npm run lint
+
+# TypeScriptチェック
+npm run typecheck
