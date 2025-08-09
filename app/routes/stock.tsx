@@ -1,11 +1,11 @@
-import type { Route } from "./+types/home";
-import { Page } from "../pages/stock";
-import { title } from "~/utils/const";
+import type { Route } from './+types/home';
+import { Page } from '../pages/stock';
+import { title } from '~/utils/const';
 
 export function meta({}: Route.MetaArgs) {
   return [
     { title: `在庫管理${title}` },
-    { name: "description", content: "在庫管理ページ" },
+    { name: 'description', content: '在庫管理ページ' },
   ];
 }
 
