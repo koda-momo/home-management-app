@@ -1,10 +1,9 @@
-import { title } from "~/utils/const";
-import type { Route } from "./+types/home";
+import { title } from '~/utils/const';
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: `TOP${title}` },
-    { name: "description", content: "TOPページ" },
+    { name: 'description', content: 'TOPページ' },
   ];
 }
 
