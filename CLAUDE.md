@@ -45,9 +45,9 @@ Route definitions in `app/routes.ts`:
 
 ```typescript
 export default [
-  index("routes/home.tsx"), // /
-  route("/login", "routes/login.tsx"), // /login
-  route("/stock", "routes/stock.tsx"), // /stock
+  index('routes/home.tsx'), // /
+  route('/login', 'routes/login.tsx'), // /login
+  route('/stock', 'routes/stock.tsx'), // /stock
 ] satisfies RouteConfig;
 ```
 
