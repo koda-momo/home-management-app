@@ -14,12 +14,10 @@ export const Page: FC = () => {
     const fetchStockData = async () => {
       try {
         // TODO:API接続時にaxiosに変更
-        // eslint-disable-next-line no-undef
         const response = await fetch('/mocks/item.json');
         const data: StockResponse = await response.json();
         setStockItems(data.data);
       } catch (error) {
-        // eslint-disable-next-line no-undef
         console.error('在庫データの取得に失敗しました:', error);
       } finally {
         setLoading(false);

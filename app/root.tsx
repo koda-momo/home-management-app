@@ -9,6 +9,7 @@ import {
 
 import type { Route } from './+types/root';
 import './app.css';
+import 'react-toastify/dist/ReactToastify.css';
 import type { ReactNode } from 'react';
 
 export const links: Route.LinksFunction = () => [
