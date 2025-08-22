@@ -1,11 +1,8 @@
 import { Page } from '../pages/stock';
-import { title } from '~/utils/const';
+import { pageInfo } from '~/utils/const';
 
 export function meta() {
-  return [
-    { title: `在庫管理${title}` },
-    { name: 'description', content: '在庫管理ページ' },
-  ];
+  return pageInfo.stock;
 }
 
 /**

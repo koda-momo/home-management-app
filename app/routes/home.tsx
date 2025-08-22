@@ -1,10 +1,7 @@
-import { title } from '~/utils/const';
+import { pageInfo } from '~/utils/const';
 
 export function meta() {
-  return [
-    { title: `TOP${title}` },
-    { name: 'description', content: 'TOPページ' },
-  ];
+  return pageInfo.home;
 }
 
 /**
