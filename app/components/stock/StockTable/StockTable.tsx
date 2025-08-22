@@ -1,19 +1,13 @@
 import type { FC } from 'react';
 import * as styles from './StockTable.css';
 import { purchaseUrl } from '~/utils/const';
-
-interface StockItem {
-  id: number;
-  name: string;
-  count: number;
-  url: string;
-}
+import type { StockItem } from '~/types/stock';
 
 interface StockTableProps {
-  items: StockItem[];
+  data: StockItem[];
 }
 
-export const StockTable: FC<StockTableProps> = ({ items }) => {
+export const StockTable: FC<StockTableProps> = ({ data }) => {
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -26,7 +20,7 @@ export const StockTable: FC<StockTableProps> = ({ items }) => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
+          {data.map((item) => (
             <tr key={item.id}>
               <td className={styles.td}>{item.id}</td>
               <td className={styles.td}>{item.name}</td>

@@ -1,3 +1,5 @@
+import type { ErrorResponse } from './api';
+
 export interface StockItem {
   id: number;
   name: string;
@@ -5,7 +7,4 @@ export interface StockItem {
   url: string;
 }
 
-export interface StockResponse {
-  status: number;
-  data: StockItem[];
-}
+export type StockResponse = StockItem | ErrorResponse;

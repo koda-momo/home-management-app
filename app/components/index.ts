@@ -1,1 +1,3 @@
-export * from './StockTable/StockTable';
+export * from './common';
+export * from './pages';
+export * from './stock';

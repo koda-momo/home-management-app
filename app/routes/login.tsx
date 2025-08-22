@@ -1,11 +1,8 @@
-import { Page } from '../pages/login';
-import { title } from '~/utils/const';
+import { LoginPage } from '~/components';
+import { pageInfo } from '~/utils/const';
 
 export function meta() {
-  return [
-    { title: `ログイン${title}` },
-    { name: 'description', content: 'ログインページ' },
-  ];
+  return pageInfo.login;
 }
 
 /**
@@ -14,7 +11,7 @@ export function meta() {
 export default function Login() {
   return (
     <main>
-      <Page />
+      <LoginPage />
     </main>
   );
 }
