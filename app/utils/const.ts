@@ -1,6 +1,10 @@
 export const title = ' | 家庭管理アプリ';
 export const purchaseUrl = 'https://www.amazon.co.jp/';
 
+export const errorMessages = {
+  amountRequired: '金額は数字で入力してください',
+} as const;
+
 export const pageInfo = {
   home: [
     { title: `TOP${title}` },

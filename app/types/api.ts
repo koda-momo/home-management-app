@@ -2,7 +2,7 @@ export interface ErrorResponse extends Error {
   statusCode: number;
 }
 
-export interface SpentApiData {
+export interface PostSpentData {
   credit: number;
   electricity: number;
   gas: number;
