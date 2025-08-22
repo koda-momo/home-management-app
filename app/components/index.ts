@@ -1,3 +1,3 @@
-export * from './Button/Button';
-export * from './Input/Input';
-export * from './StockTable/StockTable';
+export * from './common';
+export * from './pages';
+export * from './stock';

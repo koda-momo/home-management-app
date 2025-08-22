@@ -6,7 +6,7 @@ import { useSpent } from '~/hooks';
 /**
  * 家計簿ページ.
  */
-export const Page: FC = () => {
+export const HouseholdAccountBookPage: FC = () => {
   const { submitSpentData } = useSpent();
 
   return (

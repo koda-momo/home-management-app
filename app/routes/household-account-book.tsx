@@ -1,4 +1,4 @@
-import { Page } from '../pages/householdAccountBook';
+import { HouseholdAccountBookPage } from '~/components';
 import { pageInfo } from '~/utils/const';
 
 export function meta() {
@@ -11,7 +11,7 @@ export function meta() {
 export default function householdAccountBook() {
   return (
     <main>
-      <Page />
+      <HouseholdAccountBookPage />
     </main>
   );
 }

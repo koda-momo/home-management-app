@@ -1,4 +1,4 @@
-import { Page } from '../pages/login';
+import { LoginPage } from '~/components';
 import { pageInfo } from '~/utils/const';
 
 export function meta() {
@@ -11,7 +11,7 @@ export function meta() {
 export default function Login() {
   return (
     <main>
-      <Page />
+      <LoginPage />
     </main>
   );
 }

@@ -3,6 +3,6 @@ import type { FC } from 'react';
 /**
  * ログインページ.
  */
-export const Page: FC = () => {
+export const LoginPage: FC = () => {
   return <>ログイン</>;
 };
