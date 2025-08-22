@@ -189,7 +189,7 @@ describe('spentValidation', () => {
     });
 
     test('小数点を含む数値文字列の場合', () => {
-      // 小数点を含む数値が入力された場合
+      // 小数点を含む数値が入力された場合（整数のみ許可）
       const input = {
         credit: '100.5',
         electricity: '0',
@@ -198,7 +198,11 @@ describe('spentValidation', () => {
         other: '0',
       };
       const result = spentSchema.safeParse(input);
-      expect(result.success).toBe(true); // 小数点も有効な数値として扱う
+      expect(result.success).toBe(false); // 整数のみ許可なのでエラー
+      if (!result.success) {
+        expect(result.error.issues[0].path).toEqual(['credit']);
+        expect(result.error.issues[0].code).toBe('custom');
+      }
     });
   });
 });

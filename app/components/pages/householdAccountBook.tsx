@@ -18,13 +18,6 @@ export const HouseholdAccountBookPage: FC = () => {
   } = useForm<SpentFormData>({
     resolver: zodResolver(spentSchema),
     mode: 'onChange',
-    defaultValues: {
-      credit: '0',
-      electricity: '0',
-      gas: '0',
-      water: '0',
-      other: '0',
-    },
   });
 
   const onSubmit = (data: SpentFormData) => {
