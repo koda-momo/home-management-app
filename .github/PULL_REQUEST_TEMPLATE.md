@@ -4,7 +4,7 @@
 
 ## 関連 Issue
 
-#issue 番号
+Closes #{issue_number}
 
 ## 対応詳細
 
