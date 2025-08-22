@@ -18,9 +18,22 @@ export const HouseholdAccountBookPage: FC = () => {
   } = useForm<SpentFormData>({
     resolver: zodResolver(spentSchema),
     mode: 'onChange',
+    defaultValues: {
+      credit: 0,
+      electricity: 0,
+      gas: 0,
+      water: 0,
+      other: 0,
+    },
   });
 
   const onSubmit = (data: SpentFormData) => {
+    // 念のため送信前に負の値をチェック
+    const hasNegativeValue = Object.values(data).some((value) => value < 0);
+    if (hasNegativeValue) {
+      alert('負の値は入力できません');
+      return;
+    }
     submitSpentData(data);
   };
 
