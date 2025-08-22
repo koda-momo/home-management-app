@@ -3,37 +3,37 @@ import { spentSchema } from './spentValidation';
 
 describe('spentValidation', () => {
   describe('正常なケース', () => {
-    test('すべて0の場合', () => {
+    test('すべて"0"の場合', () => {
       const input = {
-        credit: 0,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '0',
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(true);
     });
 
-    test('正の数値の場合', () => {
+    test('正の数値文字列の場合', () => {
       const input = {
-        credit: 1000,
-        electricity: 5000,
-        gas: 3000,
-        water: 2000,
-        other: 500,
+        credit: '1000',
+        electricity: '5000',
+        gas: '3000',
+        water: '2000',
+        other: '500',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(true);
     });
 
-    test('最大値の場合', () => {
+    test('最大桁数の場合', () => {
       const input = {
-        credit: 9999999999,
-        electricity: 9999999999,
-        gas: 9999999999,
-        water: 9999999999,
-        other: 9999999999,
+        credit: '9999999999',
+        electricity: '9999999999',
+        gas: '9999999999',
+        water: '9999999999',
+        other: '9999999999',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(true);
@@ -41,29 +41,29 @@ describe('spentValidation', () => {
   });
 
   describe('異常なケース', () => {
-    test('負の値の場合', () => {
+    test('負の値文字列の場合', () => {
       const input = {
-        credit: -1,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '-1',
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].path).toEqual(['credit']);
-        expect(result.error.issues[0].code).toBe('too_small');
+        expect(result.error.issues[0].code).toBe('custom');
       }
     });
 
-    test('複数の負の値の場合', () => {
+    test('複数の負の値文字列の場合', () => {
       const input = {
-        credit: -100,
-        electricity: -200,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '-100',
+        electricity: '-200',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
@@ -74,13 +74,13 @@ describe('spentValidation', () => {
       }
     });
 
-    test('最大値を超える場合', () => {
+    test('最大桁数を超える場合', () => {
       const input = {
-        credit: 10000000000, // 9999999999 + 1
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '12345678901', // 11桁
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
@@ -90,29 +90,45 @@ describe('spentValidation', () => {
       }
     });
 
-    test('文字列の場合', () => {
+    test('無効な文字列の場合', () => {
       const input = {
         credit: 'invalid',
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].path).toEqual(['credit']);
-        expect(result.error.issues[0].code).toBe('invalid_type');
+        expect(result.error.issues[0].code).toBe('custom');
+      }
+    });
+
+    test('空文字列の場合', () => {
+      const input = {
+        credit: '',
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
+      };
+      const result = spentSchema.safeParse(input);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].path).toEqual(['credit']);
+        expect(result.error.issues[0].code).toBe('too_small');
       }
     });
 
     test('undefinedの場合', () => {
       const input = {
         credit: undefined,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
@@ -125,42 +141,10 @@ describe('spentValidation', () => {
     test('nullの場合', () => {
       const input = {
         credit: null,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
-      };
-      const result = spentSchema.safeParse(input);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].path).toEqual(['credit']);
-        expect(result.error.issues[0].code).toBe('invalid_type');
-      }
-    });
-
-    test('NaNの場合', () => {
-      const input = {
-        credit: NaN,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
-      };
-      const result = spentSchema.safeParse(input);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].path).toEqual(['credit']);
-        expect(result.error.issues[0].code).toBe('invalid_type');
-      }
-    });
-
-    test('Infinityの場合', () => {
-      const input = {
-        credit: Infinity,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
@@ -172,14 +156,14 @@ describe('spentValidation', () => {
   });
 
   describe('React Hook Formとの連携を想定したテスト', () => {
-    test('valueAsNumberで-1が設定された場合', () => {
-      // React Hook Formのvalues.asNumberで負の値が入る可能性があるケース
+    test('負の値文字列が入力された場合', () => {
+      // ユーザーがテキストフィールドに負の値を入力したケース
       const input = {
-        credit: -1,
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '-1',
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
@@ -188,17 +172,33 @@ describe('spentValidation', () => {
       }
     });
 
-    test('空文字列から0に変換されるケース', () => {
-      // 入力フィールドが空の場合、valueAsNumberでNaNになる可能性
+    test('空文字列の場合', () => {
+      // 入力フィールドが空の場合
       const input = {
-        credit: NaN, // 空文字列のvalueAsNumberはNaN
-        electricity: 0,
-        gas: 0,
-        water: 0,
-        other: 0,
+        credit: '', // 空文字列
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
       };
       const result = spentSchema.safeParse(input);
       expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].code).toBe('too_small');
+      }
+    });
+
+    test('小数点を含む数値文字列の場合', () => {
+      // 小数点を含む数値が入力された場合
+      const input = {
+        credit: '100.5',
+        electricity: '0',
+        gas: '0',
+        water: '0',
+        other: '0',
+      };
+      const result = spentSchema.safeParse(input);
+      expect(result.success).toBe(true); // 小数点も有効な数値として扱う
     });
   });
 });

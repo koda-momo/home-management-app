@@ -16,11 +16,11 @@ export const useSpent = () => {
   const submitSpentData = async (data: SpentFormData) => {
     try {
       const requestData: PostSpentData = {
-        credit: data.credit,
-        electricity: data.electricity,
-        gas: data.gas,
-        water: data.water,
-        other: data.other,
+        credit: Number(data.credit),
+        electricity: Number(data.electricity),
+        gas: Number(data.gas),
+        water: Number(data.water),
+        other: Number(data.other),
       };
 
       await axios.post(`${API_URL}/spent/month`, requestData);
