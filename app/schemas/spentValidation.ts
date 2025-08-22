@@ -2,15 +2,9 @@ import { z } from 'zod';
 import { errorMessages } from '~/utils/const';
 
 const amountValidation = z
-  .string()
-  .min(1, errorMessages.amountRequired)
-  .max(10, errorMessages.amountMaxLength)
-  .refine((val) => !isNaN(Number(val)), {
-    message: errorMessages.amountRequired,
-  })
-  .refine((val) => Number(val) >= 0, {
-    message: errorMessages.amountPositive,
-  });
+  .number()
+  .min(0, errorMessages.amountPositive)
+  .max(9999999999, errorMessages.amountMaxLength);
 
 export const spentSchema = z.object({
   credit: amountValidation,

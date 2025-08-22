@@ -26,25 +26,39 @@ export const HouseholdAccountBookPage: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input label="ガス代" {...register('gas')} error={errors.gas?.message} />
+      <Input
+        label="ガス代"
+        type="number"
+        min="0"
+        {...register('gas', { valueAsNumber: true })}
+        error={errors.gas?.message}
+      />
       <Input
         label="電気代"
-        {...register('electricity')}
+        type="number"
+        min="0"
+        {...register('electricity', { valueAsNumber: true })}
         error={errors.electricity?.message}
       />
       <Input
         label="水道代"
-        {...register('water')}
+        type="number"
+        min="0"
+        {...register('water', { valueAsNumber: true })}
         error={errors.water?.message}
       />
       <Input
         label="カード代"
-        {...register('credit')}
+        type="number"
+        min="0"
+        {...register('credit', { valueAsNumber: true })}
         error={errors.credit?.message}
       />
       <Input
         label="その他"
-        {...register('other')}
+        type="number"
+        min="0"
+        {...register('other', { valueAsNumber: true })}
         error={errors.other?.message}
       />
       <Button type="submit" disabled={!isValid}>
