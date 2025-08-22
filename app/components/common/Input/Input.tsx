@@ -10,7 +10,7 @@ export const Input: FC<InputProps> = ({ label, error, ...props }) => {
     <div>
       <label htmlFor={props.id}>{label}</label>
       <input {...props} />
-      {error && error}
+      {error && <div style={{ color: 'red', fontSize: '14px' }}>{error}</div>}
     </div>
   );
 };

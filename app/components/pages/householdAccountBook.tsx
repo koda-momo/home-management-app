@@ -1,6 +1,9 @@
 import type { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '~/components';
 import { useSpent } from '~/hooks';
+import { spentSchema, type SpentFormData } from '~/schemas/spentValidation';
 
 /**
  * 家計簿ページ.
@@ -8,14 +11,45 @@ import { useSpent } from '~/hooks';
 export const HouseholdAccountBookPage: FC = () => {
   const { submitSpentData } = useSpent();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<SpentFormData>({
+    resolver: zodResolver(spentSchema),
+    mode: 'onChange',
+  });
+
+  const onSubmit = (data: SpentFormData) => {
+    submitSpentData(data);
+  };
+
   return (
-    <>
-      <Input label="ガス代" />
-      <Input label="電気代" />
-      <Input label="水道代" />
-      <Input label="カード代" />
-      <Input label="その他" />
-      <Button onClick={submitSpentData}>登録する</Button>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input label="ガス代" {...register('gas')} error={errors.gas?.message} />
+      <Input
+        label="電気代"
+        {...register('electricity')}
+        error={errors.electricity?.message}
+      />
+      <Input
+        label="水道代"
+        {...register('water')}
+        error={errors.water?.message}
+      />
+      <Input
+        label="カード代"
+        {...register('credit')}
+        error={errors.credit?.message}
+      />
+      <Input
+        label="その他"
+        {...register('other')}
+        error={errors.other?.message}
+      />
+      <Button type="submit" disabled={!isValid}>
+        登録する
+      </Button>
+    </form>
   );
 };
