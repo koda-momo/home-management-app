@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 /**
  * 家計簿 支払額関連hook.
  */
@@ -9,7 +7,7 @@ export const useSpent = () => {
    * TODO:処理作成
    */
   const submitSpentData = () => {
-    toast('登録しました');
+    alert('登録しました');
   };
 
   return { submitSpentData };

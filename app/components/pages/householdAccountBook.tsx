@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import { Button, Input } from '~/components';
-import { ToastContainer } from 'react-toastify';
 import { useSpent } from '~/hooks';
 
 /**
@@ -11,7 +10,6 @@ export const HouseholdAccountBookPage: FC = () => {
 
   return (
     <>
-      <ToastContainer />
       <Input label="ガス代" />
       <Input label="電気代" />
       <Input label="水道代" />

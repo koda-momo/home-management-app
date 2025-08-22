@@ -9,7 +9,6 @@ import {
 
 import type { Route } from './+types/root';
 import './app.css';
-import 'react-toastify/dist/ReactToastify.css';
 import type { ReactNode } from 'react';
 import { ErrorPage } from '~/components';
 
