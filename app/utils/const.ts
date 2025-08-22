@@ -3,6 +3,8 @@ export const purchaseUrl = 'https://www.amazon.co.jp/';
 
 export const errorMessages = {
   amountRequired: '金額は数字で入力してください',
+  amountMaxLength: '金額は10桁以下で入力してください',
+  amountPositive: '金額は0以上の数値を入力してください',
 } as const;
 
 export const pageInfo = {

@@ -4,8 +4,12 @@ import { errorMessages } from '~/utils/const';
 const amountValidation = z
   .string()
   .min(1, errorMessages.amountRequired)
-  .refine((val) => !isNaN(Number(val)) && Number(val) >= 0, {
+  .max(10, errorMessages.amountMaxLength)
+  .refine((val) => !isNaN(Number(val)), {
     message: errorMessages.amountRequired,
+  })
+  .refine((val) => Number(val) >= 0, {
+    message: errorMessages.amountPositive,
   });
 
 export const spentSchema = z.object({
