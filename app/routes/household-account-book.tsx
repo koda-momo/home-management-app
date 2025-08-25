@@ -9,9 +9,5 @@ export function meta() {
  * 家計簿ページ.
  */
 export default function householdAccountBook() {
-  return (
-    <main>
-      <HouseholdAccountBookPage />
-    </main>
-  );
+  return <HouseholdAccountBookPage />;
 }

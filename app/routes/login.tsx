@@ -9,9 +9,5 @@ export function meta() {
  * ログインページ.
  */
 export default function Login() {
-  return (
-    <main>
-      <LoginPage />
-    </main>
-  );
+  return <LoginPage />;
 }
