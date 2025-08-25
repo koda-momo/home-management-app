@@ -13,6 +13,11 @@ import type { ReactNode } from 'react';
 import { ErrorPage } from '~/components';
 
 export const links: Route.LinksFunction = () => [
+  {
+    rel: 'icon',
+    href: '/favicon.png',
+    type: 'image/png',
+  },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
     rel: 'preconnect',
