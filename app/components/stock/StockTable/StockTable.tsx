@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import * as styles from './StockTable.css';
-import { purchaseUrl } from '~/utils/const';
 import type { StockItem } from '~/types/stock';
 
 interface StockTableProps {
@@ -27,7 +26,7 @@ export const StockTable: FC<StockTableProps> = ({ data }) => {
               <td className={styles.td}>{item.count}</td>
               <td className={styles.td}>
                 <a
-                  href={`${purchaseUrl}${decodeURIComponent(item.url)}`}
+                  href={decodeURIComponent(item.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.link}

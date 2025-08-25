@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { StockTable } from '~/components';
+import { H1, StockTable } from '~/components';
 import type { StockItem } from '~/types/stock';
 
 interface Props {
@@ -11,9 +11,9 @@ interface Props {
  */
 export const StockPage: FC<Props> = ({ data }) => {
   return (
-    <div>
-      <h1>在庫管理</h1>
+    <>
+      <H1>在庫管理</H1>
       <StockTable data={data} />
-    </div>
+    </>
   );
 };

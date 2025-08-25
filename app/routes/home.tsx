@@ -1,16 +1,17 @@
+import { TopPage } from '~/components';
 import { pageInfo } from '~/utils/const';
 
 export function meta() {
-  return pageInfo.home;
+  return pageInfo.top;
 }
 
 /**
  * TOPページ.
  */
-export default function Home() {
+export default function Top() {
   return (
     <main>
-      <div>Home</div>
+      <TopPage />
     </main>
   );
 }
