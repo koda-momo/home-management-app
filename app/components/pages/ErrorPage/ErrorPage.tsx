@@ -1,5 +1,6 @@
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 import * as styles from './ErrorPage.css';
+import { Button } from '~/components/common';
 
 interface ErrorPageProps {
   title: string;
@@ -16,20 +17,20 @@ export const ErrorPage = ({
   stack,
   showHomeButton = true,
 }: ErrorPageProps) => {
+  const navigate = useNavigate();
+
+  const gotoTop = () => {
+    navigate('/');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         {statusCode && <div className={styles.statusCode}>{statusCode}</div>}
 
         <h1 className={styles.title}>{title}</h1>
-
         <p className={styles.message}>{message}</p>
-
-        {showHomeButton && (
-          <Link to="/" className={styles.homeButton}>
-            ホームに戻る
-          </Link>
-        )}
+        {showHomeButton && <Button onClick={gotoTop}>ホームに戻る</Button>}
 
         {import.meta.env.DEV && stack && (
           <details className={styles.details}>

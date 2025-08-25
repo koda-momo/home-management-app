@@ -40,21 +40,6 @@ export const message = style({
   marginBottom: '2rem',
 });
 
-export const homeButton = style({
-  display: 'inline-block',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  padding: '0.75rem 1.5rem',
-  borderRadius: '6px',
-  textDecoration: 'none',
-  fontWeight: '500',
-  transition: 'background-color 0.2s',
-
-  ':hover': {
-    backgroundColor: '#2563eb',
-  },
-});
-
 export const details = style({
   marginTop: '2rem',
   textAlign: 'left',

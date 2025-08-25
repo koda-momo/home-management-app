@@ -1,39 +1,16 @@
 import type { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '~/components';
 import { useSpent } from '~/hooks';
-import { spentSchema, type SpentFormData } from '~/schemas/spentValidation';
 
 /**
  * 家計簿ページ.
  */
 export const HouseholdAccountBookPage: FC = () => {
-  const { submitSpentData } = useSpent();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<SpentFormData>({
-    resolver: zodResolver(spentSchema),
-    mode: 'onChange',
-  });
-
-  const onSubmit = (data: SpentFormData) => {
-    // 念のため送信前に負の値をチェック
-    const hasNegativeValue = Object.values(data).some(
-      (value) => Number(value) < 0
-    );
-    if (hasNegativeValue) {
-      alert('負の値は入力できません');
-      return;
-    }
-    submitSpentData(data);
-  };
+  const { register, handleSubmit, errors, isValid, submitSpentData } =
+    useSpent();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submitSpentData)}>
       <Input label="ガス代" {...register('gas')} error={errors.gas?.message} />
       <Input
         label="電気代"
