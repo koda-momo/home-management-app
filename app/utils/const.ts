@@ -6,6 +6,23 @@ export const errorMessages = {
   amountPositive: '金額は0以上の数値を入力してください',
 } as const;
 
+// リンク一覧
+export const path = [
+  {
+    label: 'トップ',
+    link: '/',
+  },
+  {
+    label: '在庫管理',
+    link: '/stock',
+  },
+  {
+    label: '家計簿',
+    link: '/household-account-book',
+  },
+] as const;
+
+// メタ情報
 export const pageInfo = {
   top: [
     { title: `TOP${title}` },
@@ -23,4 +40,4 @@ export const pageInfo = {
     { title: `在庫管理${title}` },
     { name: 'description', content: '在庫管理ページ' },
   ],
-};
+} as const;

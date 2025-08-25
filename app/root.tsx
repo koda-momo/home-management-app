@@ -11,6 +11,7 @@ import type { Route } from './+types/root';
 import './app.css';
 import type { ReactNode } from 'react';
 import { ErrorPage } from '~/components';
+import { PageLayout } from './components/layout/PageLayout';
 
 export const links: Route.LinksFunction = () => [
   {
@@ -49,7 +50,11 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <PageLayout>
+      <Outlet />
+    </PageLayout>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

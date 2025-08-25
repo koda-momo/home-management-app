@@ -37,9 +37,5 @@ export const loader = async () => {
 export default function Stock() {
   const data: StockResponse = useLoaderData<typeof loader>();
 
-  return (
-    <main>
-      <StockPage data={data} />
-    </main>
-  );
+  return <StockPage data={data} />;
 }

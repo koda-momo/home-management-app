@@ -9,9 +9,5 @@ export function meta() {
  * TOPページ.
  */
 export default function Top() {
-  return (
-    <main>
-      <TopPage />
-    </main>
-  );
+  return <TopPage />;
 }
