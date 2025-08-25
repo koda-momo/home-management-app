@@ -21,6 +21,14 @@ export const HouseholdAccountBookPage: FC = () => {
   });
 
   const onSubmit = (data: SpentFormData) => {
+    // 念のため送信前に負の値をチェック
+    const hasNegativeValue = Object.values(data).some(
+      (value) => Number(value) < 0
+    );
+    if (hasNegativeValue) {
+      alert('負の値は入力できません');
+      return;
+    }
     submitSpentData(data);
   };
 
