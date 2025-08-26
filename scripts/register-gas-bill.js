@@ -13,6 +13,9 @@ const FIREBASE_CONFIG = {
 const LINE_CHANNEL_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 const LINE_USER_ID = process.env.LINE_USER_ID;
 
+// 5分
+const TIME_OUT = 60000 * 5;
+
 /**
  * LINEメッセージを送信
  */
@@ -35,7 +38,7 @@ const sendLineMessage = async (message) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${LINE_CHANNEL_ACCESS_TOKEN}`,
         },
-        timeout: 5000,
+        timeout: TIME_OUT,
       }
     );
   } catch (error) {
@@ -49,7 +52,7 @@ const sendLineMessage = async (message) => {
 const getGasAmount = async () => {
   try {
     const response = await axios.get(`${API_URL}/gas`, {
-      timeout: 10000,
+      timeout: TIME_OUT,
     });
     return response.data.amount;
   } catch (error) {
@@ -78,7 +81,7 @@ const registerGasBillToFirebase = async (gasAmount) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 10000,
+      timeout: TIME_OUT,
     });
 
     console.log(`Successfully registered gas bill: ${gasAmount} to ${path}`);
