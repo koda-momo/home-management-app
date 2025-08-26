@@ -45,6 +45,7 @@ const sendLineMessage = async (message) => {
 /**
  * ガス代データを取得
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getGasAmount = async () => {
   try {
     const response = await axios.get(`${API_URL}/gas`, {
@@ -108,7 +109,8 @@ const main = async () => {
 
     // ガス代データを取得
     console.log('Fetching gas amount...');
-    const gasAmount = await getGasAmount();
+    // const gasAmount = await getGasAmount();
+    const gasAmount = 2000;
     console.log(`Gas amount retrieved: ${gasAmount}`);
 
     // Firebaseに登録
