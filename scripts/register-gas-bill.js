@@ -63,8 +63,9 @@ const getGasAmount = async () => {
 const registerGasBillToFirebase = async (gasAmount) => {
   try {
     const now = new Date();
+    const currentYear = now.getFullYear();
     const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
-    const path = `price/2025${currentMonth}`;
+    const path = `price/${currentYear}${currentMonth}`;
 
     // Firebase REST APIを使用してデータを登録
     const firebaseUrl = `https://${FIREBASE_CONFIG.projectId}-default-rtdb.firebaseio.com/${path}.json?auth=${FIREBASE_CONFIG.apiKey}`;
@@ -81,6 +82,12 @@ const registerGasBillToFirebase = async (gasAmount) => {
     });
 
     console.log(`Successfully registered gas bill: ${gasAmount} to ${path}`);
+
+    return {
+      year: currentYear,
+      month: parseInt(currentMonth, 10),
+      amount: gasAmount,
+    };
   } catch (error) {
     throw new Error(
       `Failed to register gas bill to Firebase: ${error.message}`
@@ -111,10 +118,18 @@ const main = async () => {
 
     // Firebaseに登録
     console.log('Registering gas bill to Firebase...');
-    await registerGasBillToFirebase(gasAmount);
+    const registrationInfo = await registerGasBillToFirebase(gasAmount);
 
     // 成功メッセージをLINEで送信
-    await sendLineMessage('ガス代を登録しました');
+    const successMessage = `家計簿botちゃんです。
+${registrationInfo.year}年${registrationInfo.month}月のガス代データが登録されました！
+
+ガス代：${registrationInfo.amount} 円
+
+他のデータの登録はこちらから
+https://kakeibo-pi.vercel.app`;
+
+    await sendLineMessage(successMessage);
     console.log('Gas bill registration completed successfully');
   } catch (error) {
     console.error('Gas bill registration failed:', error.message);
