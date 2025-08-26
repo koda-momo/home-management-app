@@ -41,3 +41,6 @@ export const pageInfo = {
     { name: 'description', content: '在庫管理ページ' },
   ],
 } as const;
+
+// LINE Messaging API
+export const LINE_API_BASE_URL = 'https://api.line.me/v2/bot';

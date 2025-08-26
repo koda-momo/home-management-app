@@ -1,3 +1,4 @@
+// TODO: 使用例 後で削除
 import { sendPushMessage } from '~/lib/lineClient';
 import type { LineApiResponse } from '~/types/line';
 

@@ -1,6 +1,6 @@
+import axios from 'axios';
 import type { LinePushMessagePayload, LineApiResponse } from '~/types/line';
-
-const LINE_API_BASE_URL = 'https://api.line.me/v2/bot';
+import { LINE_API_BASE_URL } from '~/utils/const';
 
 export const sendPushMessage = async (
   channelAccessToken: string,
@@ -20,21 +20,17 @@ export const sendPushMessage = async (
   };
 
   try {
-    const response = await fetch(`${LINE_API_BASE_URL}/message/push`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${channelAccessToken}`,
-      },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(5000),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `LINE API error: ${response.status} ${response.statusText}`
-      );
-    }
+    const response = await axios.post(
+      `${LINE_API_BASE_URL}/message/push`,
+      payload,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${channelAccessToken}`,
+        },
+        timeout: 5000,
+      }
+    );
 
     return {
       status: response.status,
