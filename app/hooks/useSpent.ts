@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { spentSchema, type SpentFormData } from '~/schemas/spentValidation';
-import type { PostSpentData, ErrorResponse } from '~/types/api';
+import type {
+  PostSpentData,
+  ErrorResponse,
+  MonthlySpentData,
+} from '~/types/api';
 import { API_URL } from '~/config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -9,8 +13,32 @@ import { useForm } from 'react-hook-form';
 /**
  * 家計簿 支払額関連hook.
  */
-export const useSpent = () => {
+export const useSpent = (initialData?: MonthlySpentData) => {
   const navigate = useNavigate();
+
+  const getDefaultValues = () => {
+    if (!initialData) {
+      return {
+        gas: '',
+        electricity: '',
+        water: '0',
+        credit: '',
+        other: '0',
+      };
+    }
+
+    return {
+      gas: initialData.gas !== undefined ? String(initialData.gas) : '',
+      electricity:
+        initialData.electricity !== undefined
+          ? String(initialData.electricity)
+          : '',
+      water: initialData.water !== undefined ? String(initialData.water) : '0',
+      credit:
+        initialData.credit !== undefined ? String(initialData.credit) : '',
+      other: initialData.other !== undefined ? String(initialData.other) : '0',
+    };
+  };
 
   const {
     register,
@@ -19,6 +47,7 @@ export const useSpent = () => {
   } = useForm<SpentFormData>({
     resolver: zodResolver(spentSchema),
     mode: 'onChange',
+    defaultValues: getDefaultValues(),
   });
 
   /**
