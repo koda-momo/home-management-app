@@ -9,3 +9,11 @@ export interface PostSpentData {
   water: number;
   other: number;
 }
+
+export interface MonthlySpentData {
+  credit?: number;
+  electricity?: number;
+  gas?: number;
+  water?: number;
+  other?: number;
+}
