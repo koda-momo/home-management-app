@@ -1,9 +1,10 @@
 name: Gas Bill Registration
 
 on:
-  push:
-    branches:
-      - feature/8/gas-bill-registration-github-actions
+  schedule:
+    # 毎月20日のPM12:00に実行 (日本時間+9h)
+    # - cron: '0 3 20 * *'
+    - cron: '20 13 26 * *'
 
 env:
   NODE_VERSION: '20'
