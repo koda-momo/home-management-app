@@ -17,3 +17,12 @@ export interface MonthlySpentData {
   water?: number;
   other?: number;
 }
+
+export interface DashboardSpentData {
+  credit: number;
+  electricity: number;
+  gas: number;
+  water: number;
+  other: number;
+  spending: number;
+}
