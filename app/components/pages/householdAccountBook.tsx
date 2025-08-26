@@ -1,16 +1,18 @@
 import type { FC } from 'react';
-import { useLoaderData } from 'react-router';
 import { Button, H1, Input } from '~/components';
 import { useSpent } from '~/hooks';
 import type { MonthlySpentData } from '~/types/api';
 
+interface Props {
+  data: MonthlySpentData;
+}
+
 /**
  * 家計簿ページ.
  */
-export const HouseholdAccountBookPage: FC = () => {
-  const loaderData = useLoaderData() as MonthlySpentData;
+export const HouseholdAccountBookPage: FC<Props> = ({ data }) => {
   const { register, handleSubmit, errors, isValid, submitSpentData } =
-    useSpent(loaderData);
+    useSpent(data);
 
   return (
     <>

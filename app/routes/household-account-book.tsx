@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useLoaderData } from 'react-router';
 import { HouseholdAccountBookPage } from '~/components';
 import { API_URL } from '~/config';
 import type { MonthlySpentData } from '~/types/api';
@@ -13,21 +14,34 @@ export const loader = async () => {
     const response = await axios.get<MonthlySpentData>(
       `${API_URL}/spent/month`
     );
-    return response.data;
+    return new Response(JSON.stringify(response.data), {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    });
   } catch {
-    return {
-      credit: undefined,
-      electricity: undefined,
-      gas: undefined,
-      water: 0,
-      other: 0,
-    };
+    return new Response(
+      JSON.stringify({
+        credit: undefined,
+        electricity: undefined,
+        gas: undefined,
+        water: 0,
+        other: 0,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }
+    );
   }
 };
 
 /**
  * 家計簿ページ.
  */
-export default function householdAccountBook() {
-  return <HouseholdAccountBookPage />;
+export default function HouseholdAccountBook() {
+  const data: MonthlySpentData = useLoaderData<typeof loader>();
+
+  return <HouseholdAccountBookPage data={data} />;
 }

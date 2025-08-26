@@ -16,6 +16,9 @@ import { useForm } from 'react-hook-form';
 export const useSpent = (initialData?: MonthlySpentData) => {
   const navigate = useNavigate();
 
+  /**
+   * 初期データ.
+   */
   const getDefaultValues = () => {
     if (!initialData) {
       return {
@@ -27,16 +30,14 @@ export const useSpent = (initialData?: MonthlySpentData) => {
       };
     }
 
+    const { gas, electricity, water, credit, other } = initialData;
+
     return {
-      gas: initialData.gas !== undefined ? String(initialData.gas) : '',
-      electricity:
-        initialData.electricity !== undefined
-          ? String(initialData.electricity)
-          : '',
-      water: initialData.water !== undefined ? String(initialData.water) : '0',
-      credit:
-        initialData.credit !== undefined ? String(initialData.credit) : '',
-      other: initialData.other !== undefined ? String(initialData.other) : '0',
+      gas: gas ? String(gas) : '',
+      electricity: electricity ? String(electricity) : '',
+      water: water ? String(water) : '0',
+      credit: credit ? String(credit) : '',
+      other: other ? String(other) : '0',
     };
   };
 
