@@ -4,11 +4,7 @@ import axios from 'axios';
 const API_URL = process.env.API_URL;
 const FIREBASE_CONFIG = {
   apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
+  databaseUrl: process.env.FIREBASE_DATABASE_URL,
 };
 const LINE_CHANNEL_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 const LINE_USER_ID = process.env.LINE_USER_ID;
@@ -71,7 +67,7 @@ const registerGasBillToFirebase = async (gasAmount) => {
     const path = `price/${currentYear}${currentMonth}`;
 
     // Firebase REST APIを使用してデータを登録
-    const firebaseUrl = `https://${FIREBASE_CONFIG.projectId}-default-rtdb.firebaseio.com/${path}.json?auth=${FIREBASE_CONFIG.apiKey}`;
+    const firebaseUrl = `${FIREBASE_CONFIG.databaseUrl}/${path}.json?auth=${FIREBASE_CONFIG.apiKey}`;
 
     const postData = {
       gas: parseInt(gasAmount, 10),
@@ -108,10 +104,6 @@ const main = async () => {
     // 必須環境変数チェック
     if (!API_URL || !LINE_CHANNEL_ACCESS_TOKEN || !LINE_USER_ID) {
       throw new Error('Required environment variables are missing');
-    }
-
-    if (!FIREBASE_CONFIG.apiKey || !FIREBASE_CONFIG.projectId) {
-      throw new Error('Required Firebase configuration is missing');
     }
 
     // ガス代データを取得
