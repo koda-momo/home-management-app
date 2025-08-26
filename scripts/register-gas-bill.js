@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // 環境変数の取得
 const API_URL = process.env.API_URL;
