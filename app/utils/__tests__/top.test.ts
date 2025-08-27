@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { shouldShowData, calculatePersonAmount } from './top';
-import type { DashboardSpentData } from '~/types/api';
+import { calculatePersonAmount } from '../top';
 
 // config のモック
 vi.mock('~/config', () => ({
@@ -9,53 +8,6 @@ vi.mock('~/config', () => ({
 }));
 
 describe('top utils', () => {
-  describe('shouldShowData', () => {
-    it('データがnullの場合はfalseを返す', () => {
-      expect(shouldShowData(null)).toBe(false);
-    });
-
-    it('electricityが0より大きい場合はtrueを返す', () => {
-      const mockData: DashboardSpentData = {
-        credit: 10000,
-        electricity: 8000,
-        gas: 5000,
-        water: 3000,
-        other: 2000,
-        spending: 28000,
-      };
-
-      expect(shouldShowData(mockData)).toBe(true);
-    });
-
-    it('electricityが0でも他の条件次第でtrueになりうる', () => {
-      const mockData: DashboardSpentData = {
-        credit: 10000,
-        electricity: 0,
-        gas: 5000,
-        water: 3000,
-        other: 2000,
-        spending: 20000,
-      };
-
-      // 現在の日付によって結果が変わるため、boolean値であることを確認
-      const result = shouldShowData(mockData);
-      expect(typeof result).toBe('boolean');
-    });
-
-    it('正常なデータ形式で適切に処理される', () => {
-      const mockData: DashboardSpentData = {
-        credit: 15000,
-        electricity: 12000,
-        gas: 8000,
-        water: 4000,
-        other: 3000,
-        spending: 42000,
-      };
-
-      expect(shouldShowData(mockData)).toBe(true);
-    });
-  });
-
   describe('calculatePersonAmount', () => {
     it('最初の人（isFirstPerson = true）の場合、追加20000円を加算する', () => {
       const baseAmount = 100000;

@@ -23,9 +23,6 @@ export const loader = async () => {
     return new Response(
       JSON.stringify({
         credit: undefined,
-        electricity: undefined,
-        gas: undefined,
-        water: 0,
         other: 0,
       }),
       {
