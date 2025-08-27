@@ -12,6 +12,9 @@ export const stockConstants = {
   MAX_STOCK_COUNT: 20,
 } as const;
 
+// 家賃差額
+export const RENT_DIFFERENCE = 20000;
+
 // リンク一覧
 export const path = [
   {

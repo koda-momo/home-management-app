@@ -4,25 +4,17 @@ export interface ErrorResponse extends Error {
 
 export interface PostSpentData {
   credit: number;
-  electricity: number;
-  gas: number;
-  water: number;
   other: number;
 }
 
 export interface MonthlySpentData {
   credit?: number;
-  electricity?: number;
-  gas?: number;
-  water?: number;
   other?: number;
 }
 
 export interface DashboardSpentData {
+  month: string;
   credit: number;
-  electricity: number;
-  gas: number;
-  water: number;
   other: number;
   spending: number;
 }

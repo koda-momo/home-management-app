@@ -19,21 +19,6 @@ export const HouseholdAccountBookPage: FC<Props> = ({ data }) => {
       <H1>家計簿登録ページ</H1>
       <form onSubmit={handleSubmit(submitSpentData)}>
         <Input
-          label="ガス代"
-          {...register('gas')}
-          error={errors.gas?.message}
-        />
-        <Input
-          label="電気代"
-          {...register('electricity')}
-          error={errors.electricity?.message}
-        />
-        <Input
-          label="水道代"
-          {...register('water')}
-          error={errors.water?.message}
-        />
-        <Input
           label="カード代"
           {...register('credit')}
           error={errors.credit?.message}

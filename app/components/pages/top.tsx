@@ -1,14 +1,11 @@
 import type { FC } from 'react';
 import { Button, H1 } from '../common';
 import { useNavigate } from 'react-router';
-import { path } from '~/utils/const';
+import { path, RENT_DIFFERENCE } from '~/utils/const';
 
 import type { DashboardSpentData } from '~/types/api';
-import {
-  shouldShowData,
-  calculatePersonAmount,
-  isAfter20th,
-} from '~/utils/top';
+import { calculatePersonAmount } from '~/utils/top';
+import { RENT_AMOUNT, SAVINGS_AMOUNT } from '~/config';
 
 interface Props {
   data: DashboardSpentData | null;
@@ -24,8 +21,11 @@ export const TopPage: FC<Props> = ({ data }) => {
     <>
       <H1>ダッシュボード</H1>
 
-      {shouldShowData(data) && data ? (
+      {data && (
         <div>
+          <p>
+            {data.month.slice(0, 4)}年{data.month.slice(4, 6)}月分のお支払額
+          </p>
           <p>・合計金額：{data.spending.toLocaleString()}円</p>
           <p>
             ・1人目金額：
@@ -35,20 +35,19 @@ export const TopPage: FC<Props> = ({ data }) => {
             ・2人目金額：{calculatePersonAmount(data.spending).toLocaleString()}
             円
           </p>
+
+          <div>
+            内訳
+            <ul>
+              <li>単価：{(data.spending / 2).toLocaleString()}円</li>
+              <li>
+                家賃：{RENT_AMOUNT.toLocaleString()} 〜
+                {(RENT_AMOUNT + RENT_DIFFERENCE).toLocaleString()}円
+              </li>
+              <li>貯金：{SAVINGS_AMOUNT.toLocaleString()}円</li>
+            </ul>
+          </div>
         </div>
-      ) : (
-        isAfter20th && (
-          <>
-            今月のデータが登録されていません
-            <Button
-              onClick={() => {
-                navigate('/household-account-book');
-              }}
-            >
-              データを登録
-            </Button>
-          </>
-        )
       )}
 
       <Button>ログアウト</Button>

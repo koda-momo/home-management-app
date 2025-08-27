@@ -7,6 +7,6 @@ export default defineConfig({
     environment: 'node',
     globals: true,
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', 'build'],
+    exclude: ['node_modules', 'build', 'e2e'],
   },
 });

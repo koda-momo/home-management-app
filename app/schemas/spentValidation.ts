@@ -26,9 +26,6 @@ const amountValidation = z
 
 export const spentSchema = z.object({
   credit: amountValidation,
-  electricity: amountValidation,
-  gas: amountValidation,
-  water: amountValidation,
   other: amountValidation,
 });
 

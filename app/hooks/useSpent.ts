@@ -22,20 +22,14 @@ export const useSpent = (initialData?: MonthlySpentData) => {
   const getDefaultValues = () => {
     if (!initialData) {
       return {
-        gas: '',
-        electricity: '',
-        water: '0',
         credit: '',
         other: '0',
       };
     }
 
-    const { gas, electricity, water, credit, other } = initialData;
+    const { credit, other } = initialData;
 
     return {
-      gas: gas ? String(gas) : '',
-      electricity: electricity ? String(electricity) : '',
-      water: water ? String(water) : '0',
       credit: credit ? String(credit) : '',
       other: other ? String(other) : '0',
     };
@@ -58,9 +52,6 @@ export const useSpent = (initialData?: MonthlySpentData) => {
     try {
       const requestData: PostSpentData = {
         credit: Number(data.credit),
-        electricity: Number(data.electricity),
-        gas: Number(data.gas),
-        water: Number(data.water),
         other: Number(data.other),
       };
 
