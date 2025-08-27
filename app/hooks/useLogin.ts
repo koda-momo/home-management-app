@@ -6,15 +6,7 @@ import axios from 'axios';
 import { API_URL } from '~/config';
 import { loginSchema, type LoginFormData } from '~/schemas/loginValidation';
 
-interface UseLoginReturn {
-  register: ReturnType<typeof useForm<LoginFormData>>['register'];
-  handleSubmit: ReturnType<typeof useForm<LoginFormData>>['handleSubmit'];
-  formState: ReturnType<typeof useForm<LoginFormData>>['formState'];
-  isLoading: boolean;
-  onSubmit: (data: LoginFormData) => Promise<void>;
-}
-
-export const useLogin = (): UseLoginReturn => {
+export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -30,7 +22,7 @@ export const useLogin = (): UseLoginReturn => {
       const response = await axios.post(`${API_URL}/login`, data);
 
       if (response.status === 200) {
-        navigate('/stock');
+        navigate('/');
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
