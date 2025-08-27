@@ -5,25 +5,33 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "react-router";
+} from 'react-router';
 
-import type { Route } from "./+types/root";
-import "./app.css";
+import type { Route } from './+types/root';
+import './app.css';
+import type { ReactNode } from 'react';
+import { ErrorPage } from '~/components';
+import { PageLayout } from './components/layout/PageLayout';
 
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
+    rel: 'icon',
+    href: '/favicon.png',
+    type: 'image/png',
+  },
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  {
+    rel: 'preconnect',
+    href: 'https://fonts.gstatic.com',
+    crossOrigin: 'anonymous',
   },
   {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
       <head>
@@ -42,34 +50,42 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <PageLayout>
+      <Outlet />
+    </PageLayout>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
+    const title =
+      error.status === 404 ? 'ページが見つかりません' : 'エラーが発生しました';
+    const message =
       error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+        ? 'お探しのページは存在しないか、移動した可能性があります。'
+        : error.statusText ||
+          '予期しないエラーが発生しました。しばらく時間をおいて再度お試しください。';
+
+    return (
+      <ErrorPage title={title} message={message} statusCode={error.status} />
+    );
+  }
+
+  if (error && error instanceof Error) {
+    return (
+      <ErrorPage
+        title="システムエラー"
+        message="アプリケーションでエラーが発生しました。しばらく時間をおいて再度お試しください。"
+        stack={import.meta.env.DEV ? error.stack : undefined}
+      />
+    );
   }
 
   return (
-    <main>
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre>
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <ErrorPage
+      title="不明なエラー"
+      message="予期しないエラーが発生しました。ページを再読み込みして再度お試しください。"
+    />
   );
 }
