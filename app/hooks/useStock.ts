@@ -23,6 +23,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫追加エラー:', error);
+      alert('在庫の追加に失敗しました。');
     }
   };
 
@@ -37,6 +38,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫削除エラー:', error);
+      alert('在庫の削除に失敗しました。');
     }
   };
 

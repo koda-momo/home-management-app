@@ -3,6 +3,7 @@ import * as styles from './StockTable.css';
 import type { StockItem } from '~/types/stock';
 import { Button } from '~/components';
 import { useStock } from '~/hooks';
+import { stockConstants } from '~/utils/const';
 
 interface StockTableProps {
   data: StockItem[];
@@ -30,14 +31,14 @@ export const StockTable: FC<StockTableProps> = ({ data }) => {
               <td className={styles.td}>
                 <div className={styles.buttonContainer}>
                   <Button
-                    disabled={item.count <= 0}
+                    disabled={item.count <= stockConstants.MIN_STOCK_COUNT}
                     onClick={() => subStock(item.id)}
                   >
                     -
                   </Button>
                   <span>{item.count}</span>
                   <Button
-                    disabled={item.count >= 20}
+                    disabled={item.count >= stockConstants.MAX_STOCK_COUNT}
                     onClick={() => addStock(item.id)}
                   >
                     +
