@@ -1,88 +1,18 @@
 import { test, expect } from '@playwright/test';
-import axios from 'axios';
-
-const TIME_OUT = 60000;
-const SCRAPING_CARD_URL = process.env.SCRAPING_CARD_URL || '';
-const SCRAPING_CARD_DETAIL_URL = process.env.SCRAPING_CARD_DETAIL_URL || '';
-const SCRAPING_CARD_KEYWORD = process.env.SCRAPING_CARD_KEYWORD || '';
-const SCRAPING_CARD_ID = process.env.SCRAPING_CARD_ID || '';
-const SCRAPING_CARD_PASSWORD = process.env.SCRAPING_CARD_PASSWORD || '';
-const SCRAPING_CARD_QA_URL = process.env.SCRAPING_CARD_QA_URL || '';
-
-// Firebase設定
-const FIREBASE_CONFIG = {
-  apiKey: process.env.FIREBASE_API_KEY || '',
-  databaseUrl: process.env.FIREBASE_DATABASE_URL || '',
-};
-
-// LINE設定
-const LINE_CHANNEL_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN || '';
-const LINE_USER_ID = process.env.LINE_USER_ID || '';
-
-/**
- * LINEメッセージを送信
- */
-const sendLineMessage = async (message: string) => {
-  try {
-    await axios.post(
-      'https://api.line.me/v2/bot/message/push',
-      {
-        to: LINE_USER_ID,
-        messages: [
-          {
-            type: 'text',
-            text: message,
-          },
-        ],
-        notificationDisabled: false,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${LINE_CHANNEL_ACCESS_TOKEN}`,
-        },
-        timeout: TIME_OUT,
-      }
-    );
-  } catch (error) {
-    console.error('LINE message sending failed:', error);
-  }
-};
-
-/**
- * Firebaseにカードデータを登録
- */
-const registerCardDataToFirebase = async (cardAmount: string) => {
-  try {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
-    const path = `price/${currentYear}${currentMonth}`;
-
-    const firebaseUrl = `${FIREBASE_CONFIG.databaseUrl}/${path}.json?auth=${FIREBASE_CONFIG.apiKey}`;
-
-    const postData = {
-      credit: parseInt(cardAmount, 10),
-    };
-
-    await axios.patch(firebaseUrl, postData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      timeout: TIME_OUT,
-    });
-
-    console.log(`Successfully registered card data: ${cardAmount} to ${path}`);
-
-    return {
-      year: currentYear,
-      month: parseInt(currentMonth, 10),
-      amount: cardAmount,
-    };
-  } catch (error) {
-    throw new Error(`Failed to register card data to Firebase: ${error}`);
-  }
-};
+import {
+  SCRAPING_CARD_URL,
+  TIME_OUT,
+  SCRAPING_CARD_ID,
+  SCRAPING_CARD_PASSWORD,
+  SCRAPING_CARD_QA_URL,
+  SCRAPING_CARD_KEYWORD,
+  SCRAPING_CARD_DETAIL_URL,
+  FIREBASE_CONFIG,
+  LINE_CHANNEL_ACCESS_TOKEN,
+  LINE_USER_ID,
+} from './const';
+import { registerCardDataToFirebase } from './firebase';
+import { sendLineMessage } from './line';
 
 test.describe('カードスクレイピング機能', () => {
   test('カードログインフローのテスト', async ({ page }) => {
@@ -148,7 +78,7 @@ test.describe('カードスクレイピング機能', () => {
             const successMessage = `家計簿botちゃんです。
 ${registrationInfo.year}年${registrationInfo.month}月のカード代データが登録されました！
 
-カード代：${registrationInfo.amount} 円
+カード代：${registrationInfo.amount.toLocaleString()} 円
 
 他のデータの登録はこちらから
 https://kakeibo-pi.vercel.app`;
