@@ -1,63 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { API_URL } from '~/config';
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { loginSchema, type LoginFormData } from '~/schemas/loginValidation';
 
 interface UseLoginReturn {
-  email: string;
-  password: string;
+  register: ReturnType<typeof useForm<LoginFormData>>['register'];
+  handleSubmit: ReturnType<typeof useForm<LoginFormData>>['handleSubmit'];
+  formState: ReturnType<typeof useForm<LoginFormData>>['formState'];
   isLoading: boolean;
-  emailError: string;
-  passwordError: string;
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-  handleLogin: () => Promise<void>;
+  onSubmit: (data: LoginFormData) => Promise<void>;
 }
 
 export const useLogin = (): UseLoginReturn => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
   const navigate = useNavigate();
 
-  const validateForm = (): boolean => {
-    let isValid = true;
-    setEmailError('');
-    setPasswordError('');
+  const { register, handleSubmit, formState } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onChange',
+  });
 
-    if (!email) {
-      setEmailError('メールアドレスを入力してください');
-      isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('有効なメールアドレスを入力してください');
-      isValid = false;
-    }
-
-    if (!password) {
-      setPasswordError('パスワードを入力してください');
-      isValid = false;
-    }
-
-    return isValid;
-  };
-
-  const handleLogin = async (): Promise<void> => {
-    if (!validateForm()) {
-      return;
-    }
-
+  const onSubmit = async (data: LoginFormData): Promise<void> => {
     setIsLoading(true);
 
     try {
-      const loginData: LoginData = { email, password };
-      const response = await axios.post(`${API_URL}/login`, loginData);
+      const response = await axios.post(`${API_URL}/login`, data);
 
       if (response.status === 200) {
         navigate('/stock');
@@ -76,13 +46,10 @@ export const useLogin = (): UseLoginReturn => {
   };
 
   return {
-    email,
-    password,
+    register,
+    handleSubmit,
+    formState,
     isLoading,
-    emailError,
-    passwordError,
-    setEmail,
-    setPassword,
-    handleLogin,
+    onSubmit,
   };
 };

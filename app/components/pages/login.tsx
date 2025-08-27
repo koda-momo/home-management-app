@@ -1,4 +1,4 @@
-import type { FC, FormEvent } from 'react';
+import type { FC } from 'react';
 import { H1, Input, Button } from '~/components/common';
 import { useLogin } from '~/hooks';
 
@@ -6,43 +6,27 @@ import { useLogin } from '~/hooks';
  * ログインページ.
  */
 export const LoginPage: FC = () => {
-  const {
-    email,
-    password,
-    isLoading,
-    emailError,
-    passwordError,
-    setEmail,
-    setPassword,
-    handleLogin,
-  } = useLogin();
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    handleLogin();
-  };
+  const { register, handleSubmit, formState, isLoading, onSubmit } = useLogin();
 
   return (
     <>
       <H1>ログイン</H1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="メールアドレス"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={emailError}
+          {...register('email')}
+          error={formState.errors.email?.message}
           disabled={isLoading}
         />
         <Input
           label="パスワード"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={passwordError}
+          {...register('password')}
+          error={formState.errors.password?.message}
           disabled={isLoading}
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading || !formState.isValid}>
           {isLoading ? 'ログイン中...' : 'ログイン'}
         </Button>
       </form>
