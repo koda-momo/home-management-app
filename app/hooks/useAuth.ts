@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { API_URL } from '~/config';
+import { enableAuth } from '~/utils/const';
 
 interface AuthResponse {
   authenticated: boolean;
@@ -22,8 +23,8 @@ export const useAuth = (): UseAuthReturn => {
    */
   const checkAuth = async (): Promise<void> => {
     try {
+      if (!enableAuth) return;
       const response = await axios.get<AuthResponse>(`${API_URL}/auth/status`);
-      console.dir('確認' + JSON.stringify(response.data));
 
       setIsAuthenticated(response.data.authenticated);
     } catch (error) {
