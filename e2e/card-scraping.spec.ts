@@ -78,7 +78,7 @@ test.describe('カードスクレイピング機能', () => {
             const successMessage = `家計簿botちゃんです。
 ${registrationInfo.year}年${registrationInfo.month}月のカード代データが登録されました！
 
-カード代：${registrationInfo.amount.toLocaleString()} 円
+カード代：${Number(registrationInfo.amount).toLocaleString()} 円
 
 他のデータの登録はこちらから
 https://kakeibo-pi.vercel.app`;
