@@ -52,7 +52,7 @@ export const successLineMessage = (registrationInfo: {
   const calcPrice = unitPrice + Number(RENT_AMOUNT) + Number(SAVINGS_AMOUNT);
   const RENT_DIFFERENCE = 20000;
 
-  const successMessage = `家計簿botちゃん(テスト投稿)です。
+  const successMessage = `家計簿botちゃんです。
 ${registrationInfo.year}年${registrationInfo.month}月のデータが登録されました！
 
 【カード代】

@@ -1,12 +1,8 @@
 name: Bill Registration
-# on:
-#   schedule:
-#     # 毎月20日のPM12:00に実行 (日本時間+9h)
-#     - cron: '0 3 20 * *'
 on:
-  push:
-    branches:
-      - feature/fix-line-message
+  schedule:
+    # 毎月20日のPM12:00に実行 (日本時間+9h)
+    - cron: '0 3 20 * *'
 jobs:
   test:
     timeout-minutes: 60
