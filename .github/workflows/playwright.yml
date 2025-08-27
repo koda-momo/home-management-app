@@ -15,6 +15,10 @@ jobs:
       SCRAPING_CARD_ID: ${{ secrets.SCRAPING_CARD_ID }}
       SCRAPING_CARD_PASSWORD: ${{ secrets.SCRAPING_CARD_PASSWORD }}
       SCRAPING_CARD_QA_URL: ${{ secrets.SCRAPING_CARD_QA_URL }}
+      FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+      LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+      LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
