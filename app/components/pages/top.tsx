@@ -41,7 +41,7 @@ export const TopPage: FC<Props> = ({ data }) => {
           <div>
             内訳
             <ul>
-              <li>単価：{(data.spending / 2).toLocaleString()}円</li>
+              <li>単価：{Math.round(data.spending / 2).toLocaleString()}円</li>
               <li>
                 家賃：{RENT_AMOUNT.toLocaleString()} 〜{' '}
                 {(RENT_AMOUNT + RENT_DIFFERENCE).toLocaleString()}円

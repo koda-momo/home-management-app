@@ -9,7 +9,9 @@ export const calculatePersonAmount = (
   isFirstPerson = false
 ) => {
   const additionalAmount = isFirstPerson ? RENT_DIFFERENCE : 0;
-  return baseAmount / 2 + RENT_AMOUNT + additionalAmount + SAVINGS_AMOUNT;
+  return (
+    Math.round(baseAmount / 2) + RENT_AMOUNT + additionalAmount + SAVINGS_AMOUNT
+  );
 };
 
 // 現在の日付取得

@@ -12,7 +12,7 @@ import {
   LINE_USER_ID,
 } from './const';
 import { registerCardDataToFirebase } from './firebase';
-import { sendLineMessage } from './line';
+import { sendLineMessage, successLineMessage } from './line';
 
 test.describe('カードスクレイピング機能', () => {
   test('カードログインフローのテスト', async ({ page }) => {
@@ -75,15 +75,7 @@ test.describe('カードスクレイピング機能', () => {
 
           // 成功メッセージをLINEで送信
           if (LINE_CHANNEL_ACCESS_TOKEN && LINE_USER_ID) {
-            const successMessage = `家計簿botちゃんです。
-${registrationInfo.year}年${registrationInfo.month}月のカード代データが登録されました！
-
-カード代：${Number(registrationInfo.amount).toLocaleString()} 円
-
-他のデータの登録はこちらから
-https://kakeibo-pi.vercel.app`;
-
-            await sendLineMessage(successMessage);
+            await sendLineMessage(successLineMessage(registrationInfo));
             console.log('LINE notification sent successfully');
           }
         } catch (error) {

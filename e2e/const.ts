@@ -1,4 +1,8 @@
 export const TIME_OUT = 60000;
+export const NAME1 = process.env.NAME1 || '';
+export const NAME2 = process.env.NAME2 || '';
+export const RENT_AMOUNT = process.env.RENT_AMOUNT || '';
+export const SAVINGS_AMOUNT = process.env.SAVINGS_AMOUNT || '';
 
 // スクレイピング
 export const SCRAPING_CARD_URL = process.env.SCRAPING_CARD_URL || '';
