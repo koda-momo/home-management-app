@@ -6,6 +6,7 @@ import { path, RENT_DIFFERENCE } from '~/utils/const';
 import type { DashboardSpentData } from '~/types/api';
 import { calculatePersonAmount } from '~/utils/top';
 import { RENT_AMOUNT, SAVINGS_AMOUNT } from '~/config';
+import { useLogin } from '~/hooks';
 
 interface Props {
   data: DashboardSpentData | null;
@@ -16,6 +17,7 @@ interface Props {
  */
 export const TopPage: FC<Props> = ({ data }) => {
   const navigate = useNavigate();
+  const { logout } = useLogin();
 
   return (
     <>
@@ -52,7 +54,7 @@ export const TopPage: FC<Props> = ({ data }) => {
         </div>
       )}
 
-      <Button>ログアウト</Button>
+      <Button onClick={logout}>ログアウト</Button>
       {path.map(({ label, link }) => (
         <Button
           key={label}

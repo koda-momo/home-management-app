@@ -1,3 +1,4 @@
+export const enableAuth = false; // ログイン認証ON/OFF
 export const title = ' | 家庭管理アプリ';
 
 export const errorMessages = {

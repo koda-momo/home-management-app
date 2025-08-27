@@ -15,11 +15,15 @@ export const useLogin = () => {
     mode: 'onChange',
   });
 
+  /**
+   * ログイン.
+   */
   const onSubmit = async (data: LoginFormData): Promise<void> => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/login`, data);
+      axios.defaults.withCredentials = true;
+      const response = await axios.post(`${API_URL}/auth/login`, data);
 
       if (response.status === 200) {
         navigate('/');
@@ -37,11 +41,37 @@ export const useLogin = () => {
     }
   };
 
+  /**
+   * ログアウト.
+   */
+  const logout = async (): Promise<void> => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(`${API_URL}/auth/logout`);
+
+      if (response.status === 200) {
+        navigate('/login');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const message =
+          error.response.data?.message || 'ログアウトに失敗しました';
+        alert(message);
+      } else {
+        alert('ログアウトに失敗しました');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     register,
     handleSubmit,
     formState,
     isLoading,
     onSubmit,
+    logout,
   };
 };
