@@ -1,37 +1,15 @@
 import type { FC } from 'react';
-import { useState } from 'react';
-import axios from 'axios';
 import * as styles from './StockTable.css';
 import type { StockItem } from '~/types/stock';
 import { Button } from '~/components';
-import { API_URL } from '~/config';
+import { useStock } from '~/hooks';
 
 interface StockTableProps {
   data: StockItem[];
 }
 
 export const StockTable: FC<StockTableProps> = ({ data }) => {
-  const [stockData, setStockData] = useState<StockItem[]>(data);
-
-  const handleCountChange = async (id: number, action: 'add' | 'sub') => {
-    try {
-      const endpoint = action === 'add' ? '/stock/add' : '/stock/sub';
-      await axios.post(`${API_URL}${endpoint}`, { id });
-
-      setStockData((prevData) =>
-        prevData.map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                count: action === 'add' ? item.count + 1 : item.count - 1,
-              }
-            : item
-        )
-      );
-    } catch (error) {
-      console.error('在庫更新エラー:', error);
-    }
-  };
+  const { stockData, addStock, subStock } = useStock(data);
 
   return (
     <div className={styles.tableContainer}>
@@ -50,19 +28,17 @@ export const StockTable: FC<StockTableProps> = ({ data }) => {
               <td className={styles.td}>{item.id}</td>
               <td className={styles.td}>{item.name}</td>
               <td className={styles.td}>
-                <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                >
+                <div className={styles.buttonContainer}>
                   <Button
                     disabled={item.count <= 0}
-                    onClick={() => handleCountChange(item.id, 'sub')}
+                    onClick={() => subStock(item.id)}
                   >
                     -
                   </Button>
                   <span>{item.count}</span>
                   <Button
                     disabled={item.count >= 20}
-                    onClick={() => handleCountChange(item.id, 'add')}
+                    onClick={() => addStock(item.id)}
                   >
                     +
                   </Button>
