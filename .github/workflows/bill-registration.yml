@@ -1,8 +1,12 @@
-name: Playwright Tests
+name: Bill Registration
+# on:
+#   schedule:
+#     # 毎月20日のPM12:00に実行 (日本時間+9h)
+#     - cron: '0 3 20 * *'
 on:
-  schedule:
-    # 毎月20日のPM12:00に実行 (日本時間+9h)
-    - cron: '0 3 20 * *'
+  push:
+    branches:
+      - feature/fix-line-message
 jobs:
   test:
     timeout-minutes: 60
@@ -18,6 +22,10 @@ jobs:
       FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
       LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
       LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+      NAME1: ${{ secrets.NAME1 }}
+      NAME2: ${{ secrets.NAME2 }}
+      RENT_AMOUNT: ${{ secrets.RENT_AMOUNT }}
+      SAVINGS_AMOUNT: ${{ secrets.SAVINGS_AMOUNT }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
