@@ -29,3 +29,9 @@ export const link = style({
   color: '#0066cc',
   textDecoration: 'underline',
 });
+
+export const buttonContainer = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+});

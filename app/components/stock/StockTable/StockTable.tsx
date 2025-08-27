@@ -1,12 +1,17 @@
 import type { FC } from 'react';
 import * as styles from './StockTable.css';
 import type { StockItem } from '~/types/stock';
+import { Button } from '~/components';
+import { useStock } from '~/hooks';
+import { stockConstants } from '~/utils/const';
 
 interface StockTableProps {
   data: StockItem[];
 }
 
 export const StockTable: FC<StockTableProps> = ({ data }) => {
+  const { stockData, addStock, subStock } = useStock(data);
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -19,11 +24,27 @@ export const StockTable: FC<StockTableProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {stockData.map((item) => (
             <tr key={item.id}>
               <td className={styles.td}>{item.id}</td>
               <td className={styles.td}>{item.name}</td>
-              <td className={styles.td}>{item.count}</td>
+              <td className={styles.td}>
+                <div className={styles.buttonContainer}>
+                  <Button
+                    disabled={item.count <= stockConstants.MIN_STOCK_COUNT}
+                    onClick={() => subStock(item.id)}
+                  >
+                    -
+                  </Button>
+                  <span>{item.count}</span>
+                  <Button
+                    disabled={item.count >= stockConstants.MAX_STOCK_COUNT}
+                    onClick={() => addStock(item.id)}
+                  >
+                    +
+                  </Button>
+                </div>
+              </td>
               <td className={styles.td}>
                 <a
                   href={decodeURIComponent(item.url)}
