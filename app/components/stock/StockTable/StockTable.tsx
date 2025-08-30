@@ -52,7 +52,11 @@ export const StockTable: FC<StockTableProps> = ({ data }) => {
                   rel="noopener noreferrer"
                   className={styles.link}
                 >
-                  商品ページを開く
+                  <img
+                    src="/images/ico_cart.svg"
+                    alt="cart"
+                    className={styles.cartIcon}
+                  />
                 </a>
               </td>
             </tr>

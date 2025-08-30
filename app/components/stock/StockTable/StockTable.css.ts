@@ -17,7 +17,7 @@ export const thead = style({
 export const th = style({
   border: '1px solid #ddd',
   padding: '8px',
-  textAlign: 'left',
+  textAlign: 'center',
 });
 
 export const td = style({
@@ -31,7 +31,15 @@ export const link = style({
 });
 
 export const buttonContainer = style({
+  margin: '0 auto',
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
+  justifyContent: 'space-between',
+});
+
+export const cartIcon = style({
+  width: '100%',
+  height: 20,
+  display: 'flex',
+  alignItems: 'center',
 });
