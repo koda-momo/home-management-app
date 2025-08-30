@@ -6,6 +6,7 @@ import { calculatePersonAmount } from '~/utils/top';
 import { RENT_AMOUNT, SAVINGS_AMOUNT } from '~/config';
 import { useLogin } from '~/hooks';
 import * as styles from './Top.css';
+import { Info } from '~/components/top';
 
 interface Props {
   data: DashboardSpentData | null;
@@ -54,6 +55,7 @@ export const TopPage: FC<Props> = ({ data }) => {
         </div>
       )}
 
+      <Info />
       <Button onClick={logout}>ログアウト</Button>
     </>
   );
