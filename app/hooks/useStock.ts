@@ -13,7 +13,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
 
   const addStock = async (id: number) => {
     try {
-      await apiClient.post('/stock/add', { id });
+      await apiClient.post('/stock/count/add', { id });
 
       setStockData((prevData) =>
         prevData.map((item) =>
@@ -28,7 +28,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
 
   const subStock = async (id: number) => {
     try {
-      await apiClient.post('/stock/sub', { id });
+      await apiClient.post('/stock/count/sub', { id });
 
       setStockData((prevData) =>
         prevData.map((item) =>
