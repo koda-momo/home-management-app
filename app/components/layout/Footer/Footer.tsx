@@ -1,17 +1,20 @@
 import type { FC } from 'react';
 import { Link } from 'react-router';
 import { path } from '~/utils/const';
+import * as styles from './Footer.css';
 
 /**
  * Footer.
  */
 export const Footer: FC = () => {
   return (
-    <div>
+    <div className={styles.background}>
       {path.map(({ label, link }) => (
-        <Link key={label} to={link}>
-          {label}
-        </Link>
+        <div key={label}>
+          <Link to={link} className={styles.link}>
+            {label}
+          </Link>
+        </div>
       ))}
     </div>
   );

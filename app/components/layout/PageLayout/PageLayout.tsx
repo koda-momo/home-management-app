@@ -1,8 +1,9 @@
 import type { FC, ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import { AuthGuard } from '~/components/auth/AuthGuard';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import { Footer } from '../Footer/Footer';
+import { Header } from '../Header/Header';
+import * as styles from './PageLayout.css';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -18,19 +19,18 @@ export const PageLayout: FC<PageLayoutProps> = ({ children }) => {
   // ログインページ以外では認証チェックを実行
   if (isLoginPage) {
     return (
-      <main>
-        <Header />
-        {children}
-        <Footer />
+      <main className={styles.main}>
+        <Header isLogin />
+        <div className={styles.pageLayout}>{children}</div>
       </main>
     );
   }
 
   return (
-    <main>
+    <main className={styles.main}>
       <Header />
       <AuthGuard fallback={<div>認証状態を確認中...</div>}>
-        {children}
+        <div className={styles.pageLayout}>{children}</div>
       </AuthGuard>
       <Footer />
     </main>

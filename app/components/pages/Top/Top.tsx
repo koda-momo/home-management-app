@@ -1,12 +1,11 @@
 import type { FC } from 'react';
-import { Button, H1 } from '../common';
-import { useNavigate } from 'react-router';
-import { path, RENT_DIFFERENCE } from '~/utils/const';
-
+import { Button, H1 } from '../../common';
+import { RENT_DIFFERENCE } from '~/utils/const';
 import type { DashboardSpentData } from '~/types/api';
 import { calculatePersonAmount } from '~/utils/top';
 import { RENT_AMOUNT, SAVINGS_AMOUNT } from '~/config';
 import { useLogin } from '~/hooks';
+import * as styles from './Top.css';
 
 interface Props {
   data: DashboardSpentData | null;
@@ -16,7 +15,6 @@ interface Props {
  * TOPページ.
  */
 export const TopPage: FC<Props> = ({ data }) => {
-  const navigate = useNavigate();
   const { logout } = useLogin();
 
   return (
@@ -25,22 +23,24 @@ export const TopPage: FC<Props> = ({ data }) => {
 
       {data && (
         <div>
-          <p>
-            {data.month.slice(0, 4)}年{data.month.slice(4, 6)}月分のお支払額
-          </p>
-          <ul>
-            <li>合計金額：{data.spending.toLocaleString()}円</li>
-            <li>
-              1人目金額：
-              {calculatePersonAmount(data.spending, true).toLocaleString()}円
-            </li>
-            <li>
-              2人目金額：{calculatePersonAmount(data.spending).toLocaleString()}
-              円
-            </li>
-          </ul>
+          <div className={styles.ul}>
+            <p>
+              {data.month.slice(0, 4)}年{data.month.slice(4, 6)}月分のお支払額
+            </p>
+            <ul>
+              <li>合計金額：{data.spending.toLocaleString()}円</li>
+              <li>
+                1人目金額：
+                {calculatePersonAmount(data.spending, true).toLocaleString()}円
+              </li>
+              <li>
+                2人目金額：
+                {calculatePersonAmount(data.spending).toLocaleString()}円
+              </li>
+            </ul>
+          </div>
 
-          <div>
+          <div className={styles.ul}>
             内訳
             <ul>
               <li>単価：{Math.round(data.spending / 2).toLocaleString()}円</li>
@@ -55,16 +55,6 @@ export const TopPage: FC<Props> = ({ data }) => {
       )}
 
       <Button onClick={logout}>ログアウト</Button>
-      {path.map(({ label, link }) => (
-        <Button
-          key={label}
-          onClick={() => {
-            navigate(link);
-          }}
-        >
-          {label}
-        </Button>
-      ))}
     </>
   );
 };

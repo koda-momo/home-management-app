@@ -8,10 +8,10 @@ import {
 } from 'react-router';
 
 import type { Route } from './+types/root';
-import './app.css';
+import './styles/app.css';
 import type { ReactNode } from 'react';
 import { ErrorPage } from '~/components';
-import { PageLayout } from './components/layout/PageLayout';
+import { PageLayout } from './components/layout/PageLayout/PageLayout';
 
 export const links: Route.LinksFunction = () => [
   {
