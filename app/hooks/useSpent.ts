@@ -6,7 +6,7 @@ import type {
   ErrorResponse,
   MonthlySpentData,
 } from '~/types/api';
-import { API_URL } from '~/config';
+import apiClient from '~/utils/api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -55,7 +55,7 @@ export const useSpent = (initialData?: MonthlySpentData) => {
         other: Number(data.other),
       };
 
-      await axios.post(`${API_URL}/spent/month`, requestData);
+      await apiClient.post('/spent/month', requestData);
 
       alert('登録しました');
       navigate('/');
