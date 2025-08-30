@@ -6,4 +6,11 @@
 
 html,
 body {
+  color: #4d5156;
+  margin: 0;
+}
+
+h1,
+p {
+  margin: 0;
 }
