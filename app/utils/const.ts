@@ -1,6 +1,6 @@
 import type { Info } from '~/types/top';
 
-export const enableAuth = false; // ログイン認証ON/OFF
+export const enableAuth = true; // ログイン認証ON/OFF
 export const title = ' | 家庭管理アプリ';
 
 export const errorMessages = {
