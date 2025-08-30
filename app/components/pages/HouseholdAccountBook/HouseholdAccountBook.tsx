@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Button, H1, Input } from '~/components';
 import { useSpent } from '~/hooks';
 import type { MonthlySpentData } from '~/types/api';
-import * as styles from './householdAccountBook.css';
+import * as styles from './HouseholdAccountBook.css';
 
 interface Props {
   data: MonthlySpentData;
