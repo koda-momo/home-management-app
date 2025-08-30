@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { pageInfo } from '~/utils/const';
-import { API_URL } from '~/config';
-import { useLoaderData } from 'react-router';
+import { API_URL, API_ACCESS_KEY } from '~/config';
+import { useLoaderData, redirect } from 'react-router';
 import type { StockResponse } from '~/types/stock';
 import { StockPage } from '~/components';
 
@@ -14,7 +14,9 @@ export function meta() {
  */
 export const loader = async () => {
   try {
-    const response = await axios.get<StockResponse>(`${API_URL}/stock`);
+    const response = await axios.get<StockResponse>(`${API_URL}/stock`, {
+      headers: { 'x-api-key': API_ACCESS_KEY },
+    });
     const data = response.data;
 
     return new Response(JSON.stringify(data), {
@@ -23,6 +25,10 @@ export const loader = async () => {
       },
     });
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return redirect('/login');
+    }
+
     return new Response(JSON.stringify(error), {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -30,7 +36,6 @@ export const loader = async () => {
     });
   }
 };
-
 /**
  * 在庫管理ページ.
  */
