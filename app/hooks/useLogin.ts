@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { API_URL } from '~/config';
+import apiClient from '~/utils/api';
 import { loginSchema, type LoginFormData } from '~/schemas/loginValidation';
 
 export const useLogin = () => {
@@ -23,7 +23,9 @@ export const useLogin = () => {
 
     try {
       axios.defaults.withCredentials = true;
-      const response = await axios.post(`${API_URL}/auth/login`, data);
+      const response = await apiClient.post('/auth/login', data, {
+        withCredentials: true,
+      });
 
       if (response.status === 200) {
         navigate('/');
@@ -48,7 +50,7 @@ export const useLogin = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/auth/logout`);
+      const response = await apiClient.post('/auth/logout');
 
       if (response.status === 200) {
         navigate('/login');
