@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, type FC } from 'react';
+import type { FC } from 'react';
 import { Link } from 'react-router';
 import { path } from '~/utils/const';
 import * as styles from './Header.css';
+import { useHeader } from '~/hooks/useHeader';
 
 interface HeaderProps {
   isLogin?: boolean;
@@ -11,24 +12,7 @@ interface HeaderProps {
  * Header.
  */
 export const Header: FC<HeaderProps> = ({ isLogin = false }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-
-    if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuOpen]);
+  const { menuOpen, menuRef, menuOpenOnClick } = useHeader();
 
   return (
     <div className={styles.background}>
@@ -47,12 +31,7 @@ export const Header: FC<HeaderProps> = ({ isLogin = false }) => {
 
           {/* SP */}
           <div ref={menuRef}>
-            <button
-              className={styles.spLinkButton}
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-              }}
-            >
+            <button className={styles.spLinkButton} onClick={menuOpenOnClick}>
               {menuOpen ? '×' : '≡'}
             </button>
             {menuOpen && (
