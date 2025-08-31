@@ -37,7 +37,12 @@ export const Header: FC<HeaderProps> = ({ isLogin = false }) => {
             {menuOpen && (
               <div className={styles.spLinkList}>
                 {path.map(({ label, link }) => (
-                  <Link key={label} to={link} className={styles.spLink}>
+                  <Link
+                    key={label}
+                    to={link}
+                    className={styles.spLink}
+                    onClick={menuOpenOnClick}
+                  >
                     {label}
                   </Link>
                 ))}
