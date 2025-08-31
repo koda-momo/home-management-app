@@ -21,7 +21,7 @@ export const PageLayout: FC<PageLayoutProps> = ({ children }) => {
     return (
       <main className={styles.main}>
         <Header isLogin />
-        <div className={styles.pageLayout}>{children}</div>
+        <div className={styles.loginPageLayout}>{children}</div>
       </main>
     );
   }

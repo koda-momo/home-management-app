@@ -6,6 +6,12 @@ export const main = style({
   minHeight: '100vh',
 });
 
+export const loginPageLayout = style({
+  minHeight: 'calc(100vh - 50px)', // Header,
+  background: themeColor.background,
+  padding: '20px 10px',
+});
+
 export const pageLayout = style({
   minHeight: 'calc(100vh - 150px)', // Header, Footer
   background: themeColor.background,
