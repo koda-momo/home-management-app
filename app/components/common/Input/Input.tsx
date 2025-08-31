@@ -8,10 +8,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input: FC<InputProps> = ({ label, error, ...props }) => {
   return (
-    <div>
+    <div className={styles.inputWrapper}>
       <label htmlFor={props.id}>{label}</label>
-      <input {...props} />
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      <div>
+        <input {...props} className={styles.input} />
+      </div>
+      {error ? (
+        <div className={styles.errorMessage}>{error}</div>
+      ) : (
+        <div className={styles.errorMessage} />
+      )}
     </div>
   );
 };

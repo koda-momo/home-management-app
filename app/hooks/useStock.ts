@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
+import toast from 'react-hot-toast';
 import type { StockItem } from '~/types/stock';
-import { API_URL } from '~/config';
+import apiClient from '~/utils/api';
 
 interface UseStockReturn {
   stockData: StockItem[];
@@ -14,7 +14,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
 
   const addStock = async (id: number) => {
     try {
-      await axios.post(`${API_URL}/stock/add`, { id });
+      await apiClient.post('/stock/count/add', { id });
 
       setStockData((prevData) =>
         prevData.map((item) =>
@@ -23,13 +23,13 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫追加エラー:', error);
-      alert('在庫の追加に失敗しました。');
+      toast.error('在庫の追加に失敗しました。');
     }
   };
 
   const subStock = async (id: number) => {
     try {
-      await axios.post(`${API_URL}/stock/sub`, { id });
+      await apiClient.post('/stock/count/sub', { id });
 
       setStockData((prevData) =>
         prevData.map((item) =>
@@ -38,7 +38,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫削除エラー:', error);
-      alert('在庫の削除に失敗しました。');
+      toast.error('在庫の削除に失敗しました。');
     }
   };
 

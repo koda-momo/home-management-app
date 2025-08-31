@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { API_URL } from '~/config';
+import apiClient from '~/utils/api';
 import { loginSchema, type LoginFormData } from '~/schemas/loginValidation';
+import toast from 'react-hot-toast';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,11 +16,17 @@ export const useLogin = () => {
     mode: 'onChange',
   });
 
+  /**
+   * ログイン.
+   */
   const onSubmit = async (data: LoginFormData): Promise<void> => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/login`, data);
+      axios.defaults.withCredentials = true;
+      const response = await apiClient.post('/auth/login', data, {
+        withCredentials: true,
+      });
 
       if (response.status === 200) {
         navigate('/');
@@ -28,9 +35,34 @@ export const useLogin = () => {
       if (axios.isAxiosError(error) && error.response) {
         const message =
           error.response.data?.message || 'ログインに失敗しました';
-        alert(message);
+        toast.error(message);
       } else {
-        alert('ログインに失敗しました');
+        toast.error('ログインに失敗しました');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * ログアウト.
+   */
+  const logout = async (): Promise<void> => {
+    setIsLoading(true);
+
+    try {
+      const response = await apiClient.post('/auth/logout');
+
+      if (response.status === 200) {
+        navigate('/login');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const message =
+          error.response.data?.message || 'ログアウトに失敗しました';
+        toast.error(message);
+      } else {
+        toast.error('ログアウトに失敗しました');
       }
     } finally {
       setIsLoading(false);
@@ -43,5 +75,6 @@ export const useLogin = () => {
     formState,
     isLoading,
     onSubmit,
+    logout,
   };
 };

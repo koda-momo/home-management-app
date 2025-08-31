@@ -1,7 +1,9 @@
 import type { FC } from 'react';
+import { useNavigate } from 'react-router';
 import { Button, H1, Input } from '~/components';
 import { useSpent } from '~/hooks';
 import type { MonthlySpentData } from '~/types/api';
+import * as styles from './HouseholdAccountBook.css';
 
 interface Props {
   data: MonthlySpentData;
@@ -13,6 +15,11 @@ interface Props {
 export const HouseholdAccountBookPage: FC<Props> = ({ data }) => {
   const { register, handleSubmit, errors, isValid, submitSpentData } =
     useSpent(data);
+  const navigate = useNavigate();
+
+  const gotoTop = () => {
+    navigate('/');
+  };
 
   return (
     <>
@@ -28,9 +35,15 @@ export const HouseholdAccountBookPage: FC<Props> = ({ data }) => {
           {...register('other')}
           error={errors.other?.message}
         />
-        <Button type="submit" disabled={!isValid}>
-          登録する
-        </Button>
+
+        <div className={styles.buttonWrapper}>
+          <Button type="submit" disabled={!isValid}>
+            登録する
+          </Button>
+          <Button type="button" onClick={gotoTop}>
+            TOPに戻る
+          </Button>
+        </div>
       </form>
     </>
   );

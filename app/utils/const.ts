@@ -1,3 +1,6 @@
+import type { Info } from '~/types/top';
+
+export const enableAuth = true; // ログイン認証ON/OFF
 export const title = ' | 家庭管理アプリ';
 
 export const errorMessages = {
@@ -50,3 +53,16 @@ export const pageInfo = {
     { name: 'description', content: '在庫管理ページ' },
   ],
 } as const;
+
+export const infoList: Info[] = [
+  {
+    date: '2025-08-31',
+    text: 'デザインが変更になりました',
+    category: 'update',
+  },
+  {
+    date: '2025-08-31',
+    text: 'ログイン機能が搭載されました',
+    category: 'new',
+  },
+] as const;

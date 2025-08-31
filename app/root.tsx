@@ -6,12 +6,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
-
+import { Toaster } from 'react-hot-toast';
 import type { Route } from './+types/root';
-import './app.css';
+import './styles/app.css';
 import type { ReactNode } from 'react';
 import { ErrorPage } from '~/components';
-import { PageLayout } from './components/layout/PageLayout';
+import { PageLayout } from './components/layout/PageLayout/PageLayout';
 
 export const links: Route.LinksFunction = () => [
   {
@@ -52,6 +52,7 @@ export function Layout({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <PageLayout>
+      <Toaster />
       <Outlet />
     </PageLayout>
   );

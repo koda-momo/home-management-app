@@ -6,9 +6,10 @@ import type {
   ErrorResponse,
   MonthlySpentData,
 } from '~/types/api';
-import { API_URL } from '~/config';
+import apiClient from '~/utils/api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 /**
  * 家計簿 支払額関連hook.
@@ -55,16 +56,16 @@ export const useSpent = (initialData?: MonthlySpentData) => {
         other: Number(data.other),
       };
 
-      await axios.post(`${API_URL}/spent/month`, requestData);
+      await apiClient.post('/spent/month', requestData);
 
-      alert('登録しました');
+      toast.success('登録しました');
       navigate('/');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.data) {
         const errorData = error.response.data as ErrorResponse;
-        alert(errorData.message || 'エラーが発生しました');
+        toast.error(errorData.message || 'エラーが発生しました');
       } else {
-        alert('予期しないエラーが発生しました');
+        toast.error('予期しないエラーが発生しました');
       }
     }
   };
