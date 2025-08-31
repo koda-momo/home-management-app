@@ -8,4 +8,12 @@ export const button = style({
   padding: `5px 10px`,
   color: themeColor.subText,
   fontWeight: 'bold',
+  cursor: 'pointer',
+});
+
+export const disable = style({
+  border: `2px solid ${themeColor.tertiary}`,
+  background: themeColor.tertiary,
+  color: themeColor.text,
+  cursor: 'default',
 });

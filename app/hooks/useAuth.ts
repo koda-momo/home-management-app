@@ -23,7 +23,9 @@ export const useAuth = (): UseAuthReturn => {
   const checkAuth = async (): Promise<void> => {
     try {
       if (!enableAuth) return;
-      const response = await apiClient.get<AuthResponse>('/auth/status');
+      const response = await apiClient.get<AuthResponse>('/auth/status', {
+        withCredentials: true,
+      });
 
       setIsAuthenticated(response.data.authenticated);
     } catch (error) {
