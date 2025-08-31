@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import apiClient from '~/utils/api';
 import { loginSchema, type LoginFormData } from '~/schemas/loginValidation';
+import toast from 'react-hot-toast';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,9 +35,9 @@ export const useLogin = () => {
       if (axios.isAxiosError(error) && error.response) {
         const message =
           error.response.data?.message || 'ログインに失敗しました';
-        alert(message);
+        toast.error(message);
       } else {
-        alert('ログインに失敗しました');
+        toast.error('ログインに失敗しました');
       }
     } finally {
       setIsLoading(false);
@@ -59,9 +60,9 @@ export const useLogin = () => {
       if (axios.isAxiosError(error) && error.response) {
         const message =
           error.response.data?.message || 'ログアウトに失敗しました';
-        alert(message);
+        toast.error(message);
       } else {
-        alert('ログアウトに失敗しました');
+        toast.error('ログアウトに失敗しました');
       }
     } finally {
       setIsLoading(false);

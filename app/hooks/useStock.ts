@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import type { StockItem } from '~/types/stock';
 import apiClient from '~/utils/api';
 
@@ -22,7 +23,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫追加エラー:', error);
-      alert('在庫の追加に失敗しました。');
+      toast.error('在庫の追加に失敗しました。');
     }
   };
 
@@ -37,7 +38,7 @@ export const useStock = (initialData: StockItem[]): UseStockReturn => {
       );
     } catch (error) {
       console.error('在庫削除エラー:', error);
-      alert('在庫の削除に失敗しました。');
+      toast.error('在庫の削除に失敗しました。');
     }
   };
 

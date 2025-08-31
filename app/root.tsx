@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
-
+import { Toaster } from 'react-hot-toast';
 import type { Route } from './+types/root';
 import './styles/app.css';
 import type { ReactNode } from 'react';
@@ -52,6 +52,7 @@ export function Layout({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <PageLayout>
+      <Toaster />
       <Outlet />
     </PageLayout>
   );
