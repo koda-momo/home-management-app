@@ -60,4 +60,9 @@ export const infoList: Info[] = [
     text: 'デザインが変更になりました',
     category: 'update',
   },
+  {
+    date: '2025-08-31',
+    text: 'ログイン機能が搭載されました',
+    category: 'new',
+  },
 ] as const;
